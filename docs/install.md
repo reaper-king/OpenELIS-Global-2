@@ -37,7 +37,7 @@ This updates the system from the sources in the sources list. It updates what ne
 
 3. Install Python
 
-        sudo apt-get install python
+        sudo apt-get install python2
     
 ### Create and Load SSL Certificates
 
@@ -68,7 +68,9 @@ For the self-signed certificate above, you would use:
 	
     sudo openssl pkcs12 -inkey /etc/ssl/private/apache-selfsigned.key -in /etc/ssl/certs/apache-selfsigned.crt -export -out /etc/openelis-global/keystore
 
-    cp /etc/openelis-global/keystore /etc/openelis-global/client_facing_keystore
+and then
+
+    sudo cp /etc/openelis-global/keystore /etc/openelis-global/client_facing_keystore
 
 **Be sure to remember your keystore password, you will need it later **
 	
@@ -107,18 +109,6 @@ For the self-signed certificate above, you would use:
 	For the self-signed certificate above, you would use:
 	
 	    openssl pkcs12 -export -nokeys -in /etc/ssl/certs/apache-selfsigned.crt -out /etc/openelis-global/truststore
-        
-### Install Postgresql
-OpenELIS-Global is configured to be able to install a docker based version of Postgres, but this is generally not recommended for production databases
-If you trust docker to provide your database, you can ignore this section. 
-
-1. Install Postgresql
-
-	    sudo apt install postgresql postgresql-contrib
-
-2. Configure Postgresql
-
-    Postgres gets configured automatically through the setup script. This might possibly interfere with other applications installed on the same server.
 
 	
 ### Download OpenELIS Global
@@ -178,6 +168,10 @@ Wait while install procedure completes
 Finally, copy the keystore to be your client facing keystore
 
     cp /etc/openelis-global/keystore /etc/openelis-global/client_facing_keystore
+    
+Ensure all keystores have global read permission
+
+    sudo chmod 644 /etc/openelis-global/keystore /etc/openelis-global/truststore /etc/openelis-global/client_facing_keystore
 
 Please note: OpenELIS Global 2.x is designed for and is testing on Chrome only. Please be sure to use Chrome for OpenELIS. 
 
